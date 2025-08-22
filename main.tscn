@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://vmktlvl8jcs3"]
 
-[ext_resource type="Script" path="res://camera_3d.gd" id="1_4na46"]
+[ext_resource type="Script" uid="uid://npy2lt6d6k74" path="res://camera_3d.gd" id="1_4na46"]
 [ext_resource type="PackedScene" uid="uid://vaggh28654wi" path="res://world/world.tscn" id="1_4xt76"]
 [ext_resource type="PackedScene" uid="uid://cq73ajcdti38m" path="res://player.tscn" id="3_2nc2k"]
-[ext_resource type="Script" path="res://world/world_renderer.gd" id="3_5iadi"]
+[ext_resource type="Script" uid="uid://dp71j8qtgkb6c" path="res://world/world_renderer.gd" id="3_5iadi"]
 
 [node name="Main" type="Node3D"]
 

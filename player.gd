@@ -36,8 +36,9 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_right"):
 		dir += basis.x
 	
-	if Input.is_action_pressed("fly"):
+	if Input.is_action_just_pressed("fly"):
 		flying = !flying
+		print(flying)
 
 	dir.y = 0
 	dir = dir.normalized()
