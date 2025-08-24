@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://npy2lt6d6k74" path="res://camera_3d.gd" id="1_4na46"]
 [ext_resource type="PackedScene" uid="uid://vaggh28654wi" path="res://world/world.tscn" id="1_4xt76"]
+[ext_resource type="Script" uid="uid://ct6prv3r536lh" path="res://world/WorldRenderer.cs" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cq73ajcdti38m" path="res://player.tscn" id="3_2nc2k"]
-[ext_resource type="Script" uid="uid://dp71j8qtgkb6c" path="res://world/world_renderer.gd" id="3_5iadi"]
 
 [node name="Main" type="Node3D"]
 
@@ -16,7 +16,7 @@ script = ExtResource("1_4na46")
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 40, 0)
 
 [node name="World" parent="." instance=ExtResource("1_4xt76")]
-script = ExtResource("3_5iadi")
+script = ExtResource("3_1bvp3")
 
 [node name="Player" parent="." instance=ExtResource("3_2nc2k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)

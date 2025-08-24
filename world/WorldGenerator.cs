@@ -42,6 +42,6 @@ public partial class WorldGenerator : Node
 		using var file = FileAccess.Open(WorldFile, FileAccess.ModeFlags.Write);
 		file.StoreString(json);
 
-		GD.Print("World blueprint saved to ", WorldFile);
+		GD.Print("World blueprint saved to: ", WorldFile);
 	}
 }
