@@ -22,19 +22,38 @@ public static class WorldGenerator : Object
 			{ "chunks", new Dictionary<string, object>() }
 		};
 
-		// Create one chunk
-		var blocks = new List<object>();
-		for (int i = 0; i < 20; i++)
+
+		int chunkSize = (int)data["chunk_size"];
+		int worldChunksX = 4;
+		int worldChunksZ = 4;
+
+		var chunksDict = (Dictionary<string, object>)data["chunks"];
+
+		for (int cx = 0; cx < worldChunksX; cx++)
 		{
-			blocks.Add(new object[] { new int[] { i, 0, 0 }, "grass" });
+			for (int cz = 0; cz < worldChunksZ; cz++)
+			{
+				var blocks = new List<object>();
+
+				// Fill this chunk with grass blocks (flat layer at y = 0)
+				for (int x = 0; x < chunkSize; x++)
+				{
+					for (int z = 0; z < chunkSize; z++)
+					{
+						blocks.Add(new object[] { new int[] { x, 0, z }, "grass" });
+					}
+				}
+
+				// Save chunk
+				var chunk = new Dictionary<string, object>
+			{
+				{ "blocks", blocks }
+			};
+
+				string chunkKey = $"{cx},{cz}";
+				chunksDict[chunkKey] = chunk;
+			}
 		}
-
-		var chunk = new Dictionary<string, object>
-		{
-			{ "blocks", blocks }
-		};
-
-		((Dictionary<string, object>)data["chunks"])["0,0"] = chunk;
 
 		// Convert to JSON 
 		string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
