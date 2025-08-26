@@ -36,7 +36,7 @@ public static class WorldGenerator : Object
 
 		((Dictionary<string, object>)data["chunks"])["0,0"] = chunk;
 
-		// Convert to JSON
+		// Convert to JSON 
 		string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
 
 		// Save to file
