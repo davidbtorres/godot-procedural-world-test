@@ -20,6 +20,9 @@ public partial class WorldRenderer : Node3D
 
 	public override void _Ready()
 	{
+		GD.Print("Calling GenerateWorld script.");
+		WorldGenerator.GenerateWorld();
+		GD.Print("Loading world data...");
 		LoadWorldData();
 		RenderVisibleChunks();
 	}

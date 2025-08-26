@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-public partial class WorldGenerator : Node
+public static class WorldGenerator : Object
 {
-	private const string WorldFile = "res://world.json";
+	private const string WorldFile = "res:///world/world.json";
 
-	public override void _Ready()
-	{
-		GenerateWorld();
-	}
+	// public override void _Ready()
+	// {
+	// 	GenerateWorld();
+	// }
 
-	private void GenerateWorld()
+	public static void GenerateWorld()
 	{
+		GD.Print("Generating new world blueprint...");
 		var data = new Dictionary<string, object>
 		{
 			{ "seed", 123456 },
