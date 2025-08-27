@@ -8,7 +8,7 @@ extends CharacterBody3D
 var head
 var cam_pitch := 0.0
 
-var flying = false
+var flying = true
 
 func _ready():
 	head = $Head
@@ -25,16 +25,16 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	var dir = Vector3.ZERO
-	var basis = global_transform.basis
+	var movementBasis = global_transform.basis
 
 	if Input.is_action_pressed("move_forward"):
-		dir -= basis.z
+		dir -= movementBasis.z
 	if Input.is_action_pressed("move_back"):
-		dir += basis.z
+		dir += movementBasis.z
 	if Input.is_action_pressed("move_left"):
-		dir -= basis.x
+		dir -= movementBasis.x
 	if Input.is_action_pressed("move_right"):
-		dir += basis.x
+		dir += movementBasis.x
 	
 	if Input.is_action_just_pressed("fly"):
 		flying = !flying

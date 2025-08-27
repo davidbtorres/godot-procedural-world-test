@@ -14,6 +14,8 @@ public static class WorldGenerator : Object
 
 	public static void GenerateWorld()
 	{
+		var stopwatch = new System.Diagnostics.Stopwatch();
+		stopwatch.Start();
 		GD.Print("Generating new world blueprint...");
 		var data = new Dictionary<string, object>
 		{
@@ -63,5 +65,9 @@ public static class WorldGenerator : Object
 		file.StoreString(json);
 
 		GD.Print("World blueprint saved to: ", WorldFile);
+		stopwatch.Stop();
+		GD.Print("World generation took: " + stopwatch.ElapsedMilliseconds + " ms");
+		GD.Print(OS.GetStaticMemoryUsage());
+		GD.Print(OS.GetStaticMemoryPeakUsage());
 	}
 }
