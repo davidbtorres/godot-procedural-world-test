@@ -24,10 +24,16 @@ public static class WorldGenerator : Object
 			{ "chunks", new Dictionary<string, object>() }
 		};
 
-
+		int seed = (int)data["seed"];
 		int chunkSize = (int)data["chunk_size"];
 		int worldChunksX = 4;
 		int worldChunksZ = 4;
+
+		// Setup noise
+		var noise = new FastNoiseLite();
+		noise.Seed = seed;
+		noise.NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin; // or OpenSimplex2
+		noise.Frequency = 0.05f; // controls how "stretched" terrain is
 
 		var chunksDict = (Dictionary<string, object>)data["chunks"];
 
@@ -37,20 +43,32 @@ public static class WorldGenerator : Object
 			{
 				var blocks = new List<object>();
 
-				// Fill this chunk with grass blocks (flat layer at y = 0)
 				for (int x = 0; x < chunkSize; x++)
 				{
 					for (int z = 0; z < chunkSize; z++)
 					{
-						blocks.Add(new object[] { new int[] { x, 0, z }, "grass" });
+						// World-space coords for this block (global x/z)
+						int worldX = cx * chunkSize + x;
+						int worldZ = cz * chunkSize + z;
+
+						// Sample noise (-1..1) → scale to desired height
+						float noiseValue = noise.GetNoise2D(worldX, worldZ);
+						int height = (int)(Mathf.Remap(noiseValue, -1, 1, 2, 12));
+						// terrain from y=2 to y=12
+
+						// Add column of blocks up to that height
+						for (int y = 0; y <= height; y++)
+						{
+							string blockType = (y == height) ? "grass" : "dirt";
+							blocks.Add(new object[] { new int[] { x, y, z }, blockType });
+						}
 					}
 				}
 
-				// Save chunk
 				var chunk = new Dictionary<string, object>
-			{
-				{ "blocks", blocks }
-			};
+				{
+					{ "blocks", blocks }
+				};
 
 				string chunkKey = $"{cx},{cz}";
 				chunksDict[chunkKey] = chunk;
