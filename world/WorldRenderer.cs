@@ -16,6 +16,14 @@ public partial class WorldRenderer : Node3D
 		{ "air", null }
 	};
 
+	private readonly Dictionary<string, Vector2I> BlockUVs = new()
+{
+	{ "grass_top", new Vector2I(0, 0) },
+	{ "grass_side", new Vector2I(1, 0) },
+	{ "dirt", new Vector2I(2, 0) },
+	{ "stone", new Vector2I(3, 0) }
+};
+
 	private Godot.Collections.Dictionary<string, Variant> worldData;
 
 	public override void _Ready()
@@ -115,7 +123,31 @@ public partial class WorldRenderer : Node3D
 				st.SetSmoothGroup(UInt32.MaxValue);
 				st.AddVertex(verts[vi] + worldPos);
 			}
+
+			// Add cube triangles translated to worldPos
+			for (int i = 0; i < indices.Length; i++)
+			{
+				int vi = indices[i];
+
+				st.SetNormal(norms[vi]);
+
+				// Pick UVs from atlas
+				Vector2 uvBase = BlockUVs.ContainsKey(btype)
+					? BlockUVs[btype]
+					: new Vector2I(3, 0); // default stone if missing
+
+				// Scale tile coords into [0,1] UV space
+				Vector2 uv = (new Vector2(worldPos.X, worldPos.Z) * 0.1f) + new Vector2(0.5f, 0.5f);
+
+				// ⚠️ This is a stub – next step is face-specific UV mapping
+
+				st.SetUV(uv);
+				st.SetSmoothGroup(UInt32.MaxValue);
+				st.AddVertex(verts[vi] + worldPos);
+			}
+
 		}
+
 
 		// Finish and get the mesh
 		st.GenerateNormals();
@@ -139,5 +171,14 @@ public partial class WorldRenderer : Node3D
 		shape.Shape = concave;
 		body.AddChild(shape);
 		chunkNode.AddChild(body);
+
+		var meshInstance = new MeshInstance3D();
+		//meshInstance.Mesh = arrayMesh;
+
+		// Load the material once (static/shared material is more efficient)
+		var material = ResourceLoader.Load<StandardMaterial3D>("res://materials/blockatlas.tres");
+		meshInstance.MaterialOverride = material;
+
+		AddChild(meshInstance);
 	}
 }

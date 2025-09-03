@@ -53,7 +53,7 @@ public static class WorldGenerator : Object
 
 						// Sample noise (-1..1) → scale to desired height
 						float noiseValue = noise.GetNoise2D(worldX, worldZ);
-						int height = (int)(Mathf.Remap(noiseValue, -1, 1, 2, 12));
+						int height = (int)Mathf.Remap(noiseValue, -1, 1, 2, 12);
 						// terrain from y=2 to y=12
 
 						// Add column of blocks up to that height
