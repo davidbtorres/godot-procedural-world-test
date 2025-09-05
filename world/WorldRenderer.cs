@@ -32,6 +32,7 @@ public partial class WorldRenderer : Node3D
 		WorldGenerator.GenerateWorld();
 		GD.Print("Loading world data...");
 		LoadWorldData();
+		GD.Print("World Data successfully loaded.");
 		RenderVisibleChunks();
 	}
 
